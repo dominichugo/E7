@@ -1,0 +1,37 @@
+function [fig]=myPolyPlot(x,n_max)
+%myPolyPlot plots all such polynomials with 1 <= n <= n_max <= 13 on the same
+% figure for a given range in x values
+fig = figure;
+marker = ['+','o','*','.','x','s','d','ˆ','v','>','<','p','h'];
+y = [];
+
+for h = 1:n_max
+    for i = 1:numel(x)
+        prod = 1;
+        for j = 1:h
+            prod = prod*(x(i)-j+1);
+        end
+        y(i) = 1/h * prod;
+    end
+    c = oddEven(h);
+    plot(x,y,strcat('-',c,marker(h)),...
+        'LineWidth',2,...
+        'DisplayName', ['Order ' num2str(h)]);
+    hold on
+end
+
+grid on;
+legend('show','Location','NW');
+title('Polynomials with non-negative integer roots','FontSize',20);
+xlabel('x','FontSize',16);
+ylabel('f(x)','FontSize',16);
+
+end
+
+function color = oddEven(n)
+    if mod(n,2) == 0
+        color = 'b';
+    else
+        color = 'r';
+    end   
+end
